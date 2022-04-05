@@ -1,17 +1,36 @@
 import capos.*
 
 test "encontrar artefactos" {
-	
+	rolando.levantarObjetos(espadaDelDestino)
+	rolando.levantarObjetos(libroDeHechizos)
+	rolando.levantarObjetos(collarDivino)
+	assert.equals(#{espadaDelDestino,libroDeHechizos},rolando.artefactos())
 }
 
 test "castillo" {
-	
-}
+	rolando.levantarObjetos(espadaDelDestino)
+	rolando.levantarObjetos(libroDeHechizos)
+	rolando.guardarObjetos()
+	rolando.levantarObjetos(collarDivino)
+	rolando.guardarObjetos()
+	assert.equals(#{espadaDelDestino,libroDeHechizos,collarDivino},castilloDePiedra.cofre())
+	}
 
 test "posesiones" {
-	
+	rolando.levantarObjetos(collarDivino)
+	rolando.levantarObjetos(espadaDelDestino)
+	rolando.guardarObjetos()
+	rolando.levantarObjetos(armaduraDeAceroValyrio)
+	assert.equals([collarDivino,espadaDelDestino,armaduraDeAceroValyrio],rolando.artefactosTotales())
 }
 
 test "historia" {
+	rolando.levantarObjetos(espadaDelDestino)
+	rolando.levantarObjetos(libroDeHechizos)
+	rolando.levantarObjetos(collarDivino)
+	rolando.guardarObjetos()
+	rolando.levantarObjetos(armaduraDeAceroValyrio)
+	rolando.levantarObjetos(collarDivino)
+	assert.equals([espadaDelDestino,libroDeHechizos,collarDivino,armaduraDeAceroValyrio,collarDivino],rolando.artefactosVistos())
 	
 }
