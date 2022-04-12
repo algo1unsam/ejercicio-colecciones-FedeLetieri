@@ -1,5 +1,5 @@
 object rolando {
-	const property artefactos =#{}
+	const property artefactos =#{}			
 	const property artefactosTotales=[]
 	const property artefactosVistos=[]
 	
