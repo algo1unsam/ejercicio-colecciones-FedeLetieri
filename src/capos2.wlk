@@ -1,3 +1,4 @@
+//OBJETOS UTILIZABLES
 object espada{
 	
 	var nueva = true
@@ -72,6 +73,51 @@ object invocacion {
 	}
 }
 
+
+//ENEMIGOS
+object archibaldo{
+	method poderDePelea()=16
+	method morada()= palacio
+}
+object caterina{
+	method poderDePelea()=28
+	method morada()= fortaleza
+}
+object astra{
+	method poderDePelea()=14
+	method morada()= torre
+}
+
+//HOGARES ENEMIGOS
+object palacio{}
+object fortaleza{}
+object torre{}
+
+//TIERRA DEL MUNDO--> ERETHIA
+object erethia{
+	const enemigos = #{archibaldo,astra,caterina}
+	
+	method enemigosVencibles(capo){
+		return enemigos.filter({enemigo => capo.puedeVencer(enemigo) })
+	}
+	
+	method moradasConquistables(capo){
+	 	return self.enemigosVencibles(capo)
+	 	.map({enemigo=> enemigo.morada()})
+	}
+	
+	method poderoso(capo){
+		//Opcion no tan mala
+		//const elMasPoderoso = enemigos.max({enemigo => enemigo.poderDePelea()})
+		//return capo.puedeVencer(elMasPoderoso)
+		//Otra Opcion mejor
+		//return enemigos==self.enemigosVencibles(capo)
+		return enemigos.all({enemigo => capo.puedeVencer(enemigo)})
+	}
+	
+}
+
+//HOGAR
 object castillo {
 	
 	const property artefactos = #{}
@@ -96,7 +142,7 @@ object castillo {
 	}
 }
 
-
+//PERSONA
 object rolando {
 
 	const property artefactos = #{}
@@ -141,10 +187,23 @@ object rolando {
 	method poderArtefactoMasPoderosoDeLaCasa() {
 		return casa.poderArtefactoMasPoderoso(self)
 	}
+	//erethia
+	method puedeVencer(enemigo){
+		return (self.poder()> enemigo.poderDePelea())
+	}
 	
+	method tieneArmaFatal(enemigo){
+		//return artefactos.any({artefacto => artefacto.poder(self)> enemigo.poderDePelea()})
+		return artefactos.any({artefacto => self.esLetal(artefacto, enemigo)})
+	}
+		
+	method esLetal(artefacto, enemigo){
+		return artefacto.poder(self)> enemigo.poderDePelea()
+	}
 	
-	
-	
+	method armaFatal(enemigo){
+		return artefactos.find({artefacto => self.esLetal(artefacto, enemigo)})
+	}
 		
 }
 
